@@ -27,28 +27,58 @@ built to understand the methods rather than wrap a library.
 
 ### Research Interests
 
+I am drawn to the algorithms that let many agents **coordinate, perceive, and plan at scale**,
+and to the **ML systems** that make those algorithms run efficiently and verifiably. My
+self-directed work clusters into four threads:
+
 - **Multi-robot coordination & multi-agent path finding (MAPF)** — collision-free planning,
   conflict-based search, fleet-size and throughput optimization.
-- **Perception for robotics** — edge vision pipelines and the systems that turn detection
-  models into reliable real-time signals.
-- **ML systems & sequence modeling** — efficient inference, and recurrent/attention
-  architectures studied at the implementation level.
+- **Efficient ML & sequence modeling** — attention/recurrent architectures and inference
+  acceleration, re-derived from the papers and measured, not wrapped.
+- **Perception & 3D** — edge vision pipelines and point-cloud/LiDAR processing that turn raw
+  sensor data into reliable real-time signals.
+- **Applied full-stack & systems** — taking a research idea all the way to a tested,
+  reproducible, deployable system.
 
 ---
 
 ### Selected Projects
 
-Each links to an inspectable repository with code, tests, and reported results.
+Every project below is an inspectable repository with code, tests, CI, and a reproducible
+**headline result** — each number is quoted directly from that repo's own README and figures.
 
-| Project | What it is — and why it matters |
-|---|---|
-| [**mapf-fleet**](https://github.com/hurjun/mapf-fleet) | Interactive 3D simulator of a multi-robot construction-site fleet, powered by a **from-scratch TypeScript MAPF engine** — cooperative windowed space-time A\* (WHCA\*), optimal **Conflict-Based Search (CBS)**, capacity-limited elevators, and an analytical fleet-size optimizer. *My flagship robotics-coordination project.* |
-| [**mlops** · PPE Watchman](https://github.com/hurjun/mlops) | Edge-to-cloud industrial-safety perception: a YOLOv8 edge detector streams lightweight violation **events** to a FastAPI hub that persists them and broadcasts over **WebSocket** to a live Next.js operator dashboard. *The edge-inference + central-aggregation pattern behind real robot/perception fleets.* |
-| [**xLSTM**](https://github.com/hurjun/xLSTM) | From-scratch PyTorch reimplementation of xLSTM's **sLSTM/mLSTM** cells (exponential gating, matrix memory, stabilizer state). On a 64-step recall task it reaches **100%** accuracy where a vanilla LSTM never beats chance. *Implementing a 2024 sequence architecture from the paper up.* |
-| [**attention_is_all_you_need**](https://github.com/hurjun/attention_is_all_you_need) | From-scratch PyTorch **Transformer** (Vaswani et al., 2017) — scaled dot-product/multi-head attention, sinusoidal positional encoding, Noam warmup schedule, label smoothing — trained to **~98%** exact-match on a CPU-reproducible task. *Attention understood at the implementation level.* |
-| [**stock-forecast-benchmark**](https://github.com/hurjun/stock-forecast-benchmark) | Config-driven, **leakage-aware** benchmark of 9 forecasting models (ARIMA → Transformer) behind one `BaseForecaster` interface, with an auto-generated leaderboard. *Rigorous, apples-to-apples experimental methodology.* |
-| [**stt-nursing-system**](https://github.com/hurjun/stt-nursing-system) | Voice-first nursing-documentation app (React/TypeScript) that turns simulated bedside TTS/STT rounds into structured EMR-style records — a working realization of my **undergraduate research**. *Carrying a research idea through to a deployed system.* |
-| [**speculative-decoding-lab**](https://github.com/hurjun/speculative-decoding-lab) | Research notes synthesizing speculative decoding and quantization into one testable question: how draft-model precision trades off against acceptance rate. *Reading SOTA ML-systems papers critically.* (notes, work in progress) |
+#### Efficient ML & Sequence Modeling
+
+| Project | What it is | Headline result |
+|---|---|---|
+| [**attention_is_all_you_need**](https://github.com/hurjun/attention_is_all_you_need) | From-scratch PyTorch **Transformer** (Vaswani et al., 2017) — scaled-dot-product / multi-head attention, sinusoidal encodings, Noam warmup, label smoothing. | **98.2%** greedy exact-match on a synthetic reverse task with a ~0.66 M-param model, fully reproducible in ~90 s on CPU. |
+| [**xLSTM**](https://github.com/hurjun/xLSTM) | From-scratch reimplementation of xLSTM's **sLSTM / mLSTM** cells (exponential gating, matrix memory, stabilizer state) — NeurIPS 2024. | **100%** accuracy on 64-step recall, where a vanilla LSTM stays at chance (~6.5%) even given **2× the parameters** — an 8× longer reliable horizon. |
+| [**speculative-decoding-lab**](https://github.com/hurjun/speculative-decoding-lab) | From-scratch **speculative decoding** with distribution-preserving acceptance sampling, unit-tested for exact-distribution correctness. | **Up to 1.80×** lossless speedup (gpt2-large + distilgpt2 draft, MPS), output token-for-token identical to autoregressive decoding; acceptance rate α tracks draft/target similarity. |
+| [**stock-forecast-benchmark**](https://github.com/hurjun/stock-forecast-benchmark) | Config-driven, **leakage-aware** benchmark of 9 forecasters (ARIMA → Transformer) behind one `BaseForecaster` interface, with an auto-generated leaderboard. | Across 30 yrs train / 8 yrs held-out test (3 tickers), **Prophet leads** (MAE 117.45) over LSTM, GRU, XGBoost and a Transformer — apples-to-apples. |
+
+#### Multi-Robot Coordination & Robotics
+
+| Project | What it is | Headline result |
+|---|---|---|
+| [**mapf-fleet**](https://github.com/hurjun/mapf-fleet) &nbsp;⭐ *flagship* | Interactive 3D simulator of a multi-robot construction-site fleet on a **from-scratch TypeScript MAPF engine** — cooperative windowed space-time A\* (WHCA\*), optimal **Conflict-Based Search (CBS)**, capacity-limited elevators, analytical fleet-size optimizer. | **Zero collisions across all 66 seed-swept benchmark runs (21,000+ simulated ticks)**; throughput scales to 9.3 deliveries/min at 16 agents, with the optimizer's predicted bottleneck validated live against the running sim. |
+| [**setpoint**](https://github.com/hurjun/setpoint) | **Reinforcement learning from scratch** (NumPy/PyTorch) for HVAC setpoint control as an MDP — value iteration and REINFORCE, each unit-tested against problems with known answers. | Value iteration converges to the hand-derived optimum `V*=[7,10,7]`; REINFORCE improves mean episode return from **−112.7 → −34.7** over 400 episodes. |
+
+#### Perception & 3D
+
+| Project | What it is | Headline result |
+|---|---|---|
+| [**mlops** · PPE Watchman](https://github.com/hurjun/mlops) | Edge-to-cloud industrial-safety perception: a YOLOv8 edge detector streams lightweight violation **events** to a FastAPI hub that persists them and broadcasts over **WebSocket** to a live Next.js dashboard. | Offline-first distributed event pipeline (edge inference → central aggregation → live browser), locked down by **33 passing tests** (8 rules + 25 API/broadcaster) and CI. |
+| [**open3d**](https://github.com/hurjun/open3d) | A **7-stage** tour of the classic 3D point-cloud / LiDAR pipeline — voxel filtering, PCA normals, RANSAC ground segmentation, DBSCAN clustering, ICP registration, Poisson reconstruction, mesh validation, `.las` I/O. | Each stage is a runnable script that prints quantitative metrics (ICP `fitness` / `inlier_rmse`, RANSAC inliers, cluster counts) and renders a figure — the building blocks under SLAM and mapping. |
+| [**opencv**](https://github.com/hurjun/opencv) | OpenCV preprocessing + a torchvision **Faster R-CNN** person detector + an ROI intrusion rule engine + MOG2 motion detection, wired into one `video → detect → rule → log` driver. | Real detection (single person at score **0.999** on the test image); the non-detection path runs at **~270 FPS** on CPU, with append-only CSV event logging. |
+
+#### Applied Full-Stack & Systems
+
+| Project | What it is | Headline result |
+|---|---|---|
+| [**stt-nursing-system** · MediVoice](https://github.com/hurjun/stt-nursing-system) | Voice-first nursing-documentation app (React/TypeScript) that turns bedside TTS/STT rounds into structured EMR-style records — a deployed realization of my **undergraduate research**. | In that study the assisted workflow cut documentation time by **up to 96%** and Google's Korean speech engine hit a **0% character error rate** on the reference utterance — both reproduced in-app. |
+| [**gre**](https://github.com/hurjun/gre) | Full-stack **adaptive** GRE practice platform (FastAPI + React + MySQL): serves one question at a time, steps difficulty up on a correct answer and down on a miss, retires solved questions. | A static question bank turned into a personalized per-section study loop; screenshots are real renders of the running app. |
+| [**dfinite** · FitFlow](https://github.com/hurjun/dfinite) | FastAPI + PostgreSQL back-office for a fictional fitness chain — the focus is **correctness engineering** on a working-but-buggy proof of concept. | **5 subtle business-logic defects** diagnosed to root cause, fixed, and locked down with a regression suite that runs with no external DB (isolated SQLite) plus lint + CI. |
+| [**futurescole**](https://github.com/hurjun/futurescole) | Containerized **data pipeline** (Python + PostgreSQL + Docker Compose) that synthesizes realistic web-service telemetry, stores it with a deliberate schema, and renders analytics charts. | A reproducible batch pipeline modeling session funnels, conversion/error rates and peak-hour bias the way a real e-commerce backend produces them. |
 
 ---
 
