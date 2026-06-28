@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=180&section=header&text=Heojun%20Hur&fontSize=64&fontAlignY=36&desc=Robotics%20%26%20ML%20Engineer&descAlignY=58&descSize=22" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=180&section=header&text=Heojun%20Hur&fontSize=64&fontAlignY=36&desc=Full-Stack%20Developer%20%C2%B7%20Ships%20Real%20Products%20End%20to%20End&descAlignY=58&descSize=22" />
 </div>
 
 <div align="center">
@@ -14,70 +14,110 @@
 
 ### About
 
-I build and operate real robotic and ML systems. Over ~4 years in industry I led the
-real-time monitoring and control platform for a fleet of **30+ autonomous service robots**
-(WebRTC telemetry, MQTT command channels) deployed across hospital, factory, and outdoor
-environments, and shipped data-intensive backends end to end. That production work pulled me
-toward the research questions underneath it — **how fleets of robots coordinate, perceive, and
-plan at scale** — which is why I'm now pursuing graduate study. The repositories below are my
-own from-scratch reimplementations of core algorithms and reproducible engineering systems,
-built to understand the methods rather than wrap a library.
+I'm a **full-stack web developer**, and my signature strength is **diagnosing and fixing a wide
+variety of errors across the entire stack** — frontend, backend, database, infrastructure,
+real-time links, and robotics telemetry. When something breaks in production, I'm the person who
+traces it from the browser to the socket to the query plan and makes it stay fixed.
+
+Over **5+ years** I've built and shipped production systems across **robotics, fintech, and
+healthcare** — as a solo developer owning everything end to end, and as the web lead for fleets of
+real robots in the field. One principle guides everything I ship:
+
+> **The value of a system is determined not just by its capability, but by how well it fits the
+> actual workflows, habits, and needs of the people who use it.**
+
+So I design from the user's real workflow inward — the data model, the API, the UI, the real-time
+link, and the operational tooling — and I take ownership of all of it. Because a system only
+delivers value when it stays up, the work I'm proudest of is the least glamorous one: **I've solved
+a wide variety of errors across the entire stack.**
 
 ---
 
-### Research Interests
+### Shipped Products
 
-I am drawn to the algorithms that let many agents **coordinate, perceive, and plan at scale**,
-and to the **ML systems** that make those algorithms run efficiently and verifiably. My
-self-directed work clusters into four threads:
+Production systems I built and shipped — each one is run by real companies.
 
-- **Multi-robot coordination & multi-agent path finding (MAPF)** — collision-free planning,
-  conflict-based search, fleet-size and throughput optimization.
-- **Efficient ML & sequence modeling** — attention/recurrent architectures and inference
-  acceleration, re-derived from the papers and measured, not wrapped.
-- **Perception & 3D** — edge vision pipelines and point-cloud/LiDAR processing that turn raw
-  sensor data into reliable real-time signals.
-- **Applied full-stack & systems** — taking a research idea all the way to a tested,
-  reproducible, deployable system.
+| Product | What it is | Stack | Live |
+|---|---|---|---|
+| **CRISK** | Corporate carbon / climate-risk reporting platform — auto-generated risk reports backed by FastAPI financial-data endpoints and Spring Boot auth. | FastAPI · Spring Boot · MySQL · AWS | [crisk.co.kr](https://www.crisk.co.kr/) |
+| **Credivalue** | Asynchronous Excel-processing reporting service — AWS Lambda + Step Functions + SQS pipeline for large uploads. | AWS Lambda · Step Functions · SQS | [credivalue.com](https://credivalue.com/) |
+| **Credit Imbalance Tracker** | Credit-imbalance tracking dashboard over collected financial data, built for enesg. | Next.js · Node.js · TypeScript · MUI | [enesg.co.kr](http://www.enesg.co.kr/) |
+| **Gole FMS Console** | End-to-end Fleet Management System for AMR robot swarms — live map, scenario editor, cargo tracking, and role-based ops console. | React · TypeScript · PostgreSQL · MQTT · VDA5050 | *Operator console (internal)* |
 
 ---
 
-### Selected Projects
+### 🔧 Debugging & Reliability
 
-Every project below is an inspectable repository with code, tests, CI, and a reproducible
-**headline result** — each number is quoted directly from that repo's own README and figures.
+> The thread that runs through every job below: finding the failure, naming it precisely, and
+> engineering the system so it survives the next one.
 
-#### Efficient ML & Sequence Modeling
+- **Performance — report generation 10 min → 2 min.** At Niflers I profiled and optimized a
+  monolithic **20,000+ line** report-generation script, cutting end-to-end runtime from
+  **10 minutes to 2 minutes**.
+- **Anticipation — MQTT anomalies that predicted failures.** At Dogu Robotics I discovered that
+  **abnormal shifts in MQTT message frequency often predicted robot failures *before* customers
+  noticed them**, and turned that signal into proactive monitoring across 30+ deployed robots.
+- **Classification — network vs. auth vs. DB.** At Gole Robotics I built logging that **cleanly
+  separates network, authentication, and database failures**, paired with **WebSocket auto-backoff
+  reconnection** and **render throttling** so the real-time fleet UI survives flaky links instead
+  of falling over.
+- **Whole-stack ownership.** As Niflers' **solo** full-stack developer I personally diagnosed and
+  fixed failures across *every* layer — frontend, backend, database, infrastructure, and
+  deployment — and **migrated a live frontend from Vue.js to React without breaking deployed
+  sites**.
 
-| Project | What it is | Headline result |
-|---|---|---|
-| [**attention_is_all_you_need**](https://github.com/hurjun/attention_is_all_you_need) | From-scratch PyTorch **Transformer** (Vaswani et al., 2017) — scaled-dot-product / multi-head attention, sinusoidal encodings, Noam warmup, label smoothing. | **98.2%** greedy exact-match on a synthetic reverse task with a ~0.66 M-param model, fully reproducible in ~90 s on CPU. |
-| [**xLSTM**](https://github.com/hurjun/xLSTM) | From-scratch reimplementation of xLSTM's **sLSTM / mLSTM** cells (exponential gating, matrix memory, stabilizer state) — NeurIPS 2024. | **100%** accuracy on 64-step recall, where a vanilla LSTM stays at chance (~6.5%) even given **2× the parameters** — an 8× longer reliable horizon. |
-| [**speculative-decoding-lab**](https://github.com/hurjun/speculative-decoding-lab) | From-scratch **speculative decoding** with distribution-preserving acceptance sampling, unit-tested for exact-distribution correctness. | **Up to 1.80×** lossless speedup (gpt2-large + distilgpt2 draft, MPS), output token-for-token identical to autoregressive decoding; acceptance rate α tracks draft/target similarity. |
-| [**stock-forecast-benchmark**](https://github.com/hurjun/stock-forecast-benchmark) | Config-driven, **leakage-aware** benchmark of 9 forecasters (ARIMA → Transformer) behind one `BaseForecaster` interface, with an auto-generated leaderboard. | Across 30 yrs train / 8 yrs held-out test (3 tickers), **Prophet leads** (MAE 117.45) over LSTM, GRU, XGBoost and a Transformer — apples-to-apples. |
+---
 
-#### Multi-Robot Coordination & Robotics
+### Experience
 
-| Project | What it is | Headline result |
-|---|---|---|
-| [**mapf-fleet**](https://github.com/hurjun/mapf-fleet) &nbsp;⭐ *flagship* | Interactive 3D simulator of a multi-robot construction-site fleet on a **from-scratch TypeScript MAPF engine** — cooperative windowed space-time A\* (WHCA\*), optimal **Conflict-Based Search (CBS)**, capacity-limited elevators, analytical fleet-size optimizer. | **Zero collisions across all 66 seed-swept benchmark runs (21,000+ simulated ticks)**; throughput scales to 9.3 deliveries/min at 16 agents, with the optimizer's predicted bottleneck validated live against the running sim. |
-| [**setpoint**](https://github.com/hurjun/setpoint) | **Reinforcement learning from scratch** (NumPy/PyTorch) for HVAC setpoint control as an MDP — value iteration and REINFORCE, each unit-tested against problems with known answers. | Value iteration converges to the hand-derived optimum `V*=[7,10,7]`; REINFORCE improves mean episode return from **−112.7 → −34.7** over 400 episodes. |
+#### 🤖 Gole Robotics — Full-Stack & Robotics Simulation Engineer · *2024.05 – Present (current)*
 
-#### Perception & 3D
+Building an end-to-end **Fleet Management System (FMS)** for AMR swarms (deployment + service robots).
 
-| Project | What it is | Headline result |
-|---|---|---|
-| [**mlops** · PPE Watchman](https://github.com/hurjun/mlops) | Edge-to-cloud industrial-safety perception: a YOLOv8 edge detector streams lightweight violation **events** to a FastAPI hub that persists them and broadcasts over **WebSocket** to a live Next.js dashboard. | Offline-first distributed event pipeline (edge inference → central aggregation → live browser), locked down by **33 passing tests** (8 rules + 25 API/broadcaster) and CI. |
-| [**open3d**](https://github.com/hurjun/open3d) | A **7-stage** tour of the classic 3D point-cloud / LiDAR pipeline — voxel filtering, PCA normals, RANSAC ground segmentation, DBSCAN clustering, ICP registration, Poisson reconstruction, mesh validation, `.las` I/O. | Each stage is a runnable script that prints quantitative metrics (ICP `fitness` / `inlier_rmse`, RANSAC inliers, cluster counts) and renders a figure — the building blocks under SLAM and mapping. |
-| [**opencv**](https://github.com/hurjun/opencv) | OpenCV preprocessing + a torchvision **Faster R-CNN** person detector + an ROI intrusion rule engine + MOG2 motion detection, wired into one `video → detect → rule → log` driver. | Real detection (single person at score **0.999** on the test image); the non-detection path runs at **~270 FPS** on CPU, with append-only CSV event logging. |
+- Real-time fleet control over **MQTT / VDA5050**, with **WebSocket** feeds using snapshot +
+  incremental updates, render throttling, and auto-backoff reconnection for flaky links.
+- **Visual scenario editor** — operators compose routes over SLAM maps and directional navigation
+  nodes.
+- **Cargo tracking** — automated photography, pickup/dropoff history, per-robot throughput
+  analytics, recurring schedules, and multi-floor delivery with elevator coordination.
+- **Role-based access control** + comprehensive logging on a **PostgreSQL** backend that
+  distinguishes network / auth / DB failures.
+- **Sim-to-Real** workflows with NVIDIA **Isaac Sim/Lab**, reinforcement learning, and domain
+  randomization.
+- *Stack: React · TypeScript · PostgreSQL · MQTT · VDA5050*
 
-#### Applied Full-Stack & Systems
+#### 💹 Niflers — Full-Stack Engineer (solo) · Fintech / Climate Risk · *2024.01 – 2025.11*
 
-| Project | What it is | Headline result |
-|---|---|---|
-| [**stt-nursing-system** · MediVoice](https://github.com/hurjun/stt-nursing-system) | Voice-first nursing-documentation app (React/TypeScript) that turns bedside TTS/STT rounds into structured EMR-style records — a deployed realization of my **undergraduate research**. | In that study the assisted workflow cut documentation time by **up to 96%** and Google's Korean speech engine hit a **0% character error rate** on the reference utterance — both reproduced in-app. |
-| [**gre**](https://github.com/hurjun/gre) | Full-stack **adaptive** GRE practice platform (FastAPI + React + MySQL): serves one question at a time, steps difficulty up on a correct answer and down on a miss, retires solved questions. | A static question bank turned into a personalized per-section study loop; screenshots are real renders of the running app. |
-| [**futurescole**](https://github.com/hurjun/futurescole) | Containerized **data pipeline** (Python + PostgreSQL + Docker Compose) that synthesizes realistic web-service telemetry, stores it with a deliberate schema, and renders analytics charts. | A reproducible batch pipeline modeling session funnels, conversion/error rates and peak-hour bias the way a real e-commerce backend produces them. |
+Single developer owning **all** frontend, backend, infrastructure, and deployment.
+
+- Optimized a monolithic **20,000+ line** script: report generation **10 min → 2 min**.
+- Auto-generation system for **200K+** corporate carbon-risk reports.
+- **MySQL** schema design + automated **daily data-collection pipeline** (Docker + Nginx).
+- **FastAPI** financial-data endpoints + **Spring Boot** authentication for crisk.co.kr.
+- **AWS ECS + Step Functions** parallel pipeline for daily financial-data ingestion.
+- **LLM-based** natural-language report Q&A prototype.
+- Shipped **CRISK**, **Credivalue**, and the **enesg Credit Imbalance Tracker** (see table above).
+
+#### 🦾 Dogu Robotics — Robot Control System Developer & Web Lead · *2022.01 – 2023.12*
+
+Real-time monitoring and control for **30+ robots across 10+ sites** (hospital, outdoor, factory).
+
+- **WebRTC** video streaming + **MQTT** control/monitoring + **Grafana** dashboards.
+- Discovered that **MQTT message-frequency anomalies predicted failures before customer
+  complaints**, enabling proactive monitoring.
+- Migrated the frontend **Vue.js → React** with standardized components across deployments.
+- Service-robot front-facing touch UI — wayfinding, info display, real-time **Zoom SDK** video calls.
+- Organized developer conferences and study groups (Git, clean code, engineering culture).
+- *Clients: Hyundai · SK Hynix · GS EPS*
+
+#### 🏭 Mobile Entropy — Full-Stack Developer · *2021.05 – 2021.11*
+
+Built the Incheon City Gas **ERP** system.
+
+#### 🌊 NSG Co., Ltd. — Freelance, Digital Twin · *2021.03 – 2021.04*
+
+Converted K-water (Korea Water Resources Corp) nuclear **thermal-hydraulic** calculation logic into
+a **C++ digital twin**.
 
 ---
 
@@ -89,48 +129,84 @@ Every project below is an inspectable repository with code, tests, CI, and a rep
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white)
-![C++](https://img.shields.io/badge/C++-00599C?style=flat&logo=cplusplus&logoColor=white)
-![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=openjdk&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=black)
+![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=openjdk&logoColor=white)
+![C++](https://img.shields.io/badge/C++-00599C?style=flat&logo=cplusplus&logoColor=white)
 
-**ML / Robotics**
+**Frontend**
 
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=PyTorch&logoColor=white)
-![Ultralytics YOLO](https://img.shields.io/badge/YOLOv8-111F68?style=flat&logo=ultralytics&logoColor=white)
-![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat&logo=opencv&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikitlearn&logoColor=white)
-![WebRTC](https://img.shields.io/badge/WebRTC-333333?style=flat&logo=WebRTC&logoColor=white)
-![MQTT](https://img.shields.io/badge/MQTT-660066?style=flat&logo=MQTT&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=black)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-007FFF?style=flat&logo=mui&logoColor=white)
 
-**Systems / Web / Infra**
+**Backend**
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=FastAPI&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=black)
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=flat&logo=nodedotjs&logoColor=white)
+
+**Cloud / Infra**
+
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat&logo=AmazonWebServices&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white)
+
+**Databases**
+
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=flat&logo=mariadb&logoColor=white)
+![Oracle](https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat&logo=Redis&logoColor=white)
+
+**Real-time / Systems**
+
+![WebSocket](https://img.shields.io/badge/WebSocket-010101?style=flat&logo=socketdotio&logoColor=white)
+![MQTT](https://img.shields.io/badge/MQTT-660066?style=flat&logo=MQTT&logoColor=white)
+![WebRTC](https://img.shields.io/badge/WebRTC-333333?style=flat&logo=WebRTC&logoColor=white)
+![VDA5050](https://img.shields.io/badge/VDA5050-1F6FEB?style=flat)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=flat&logo=grafana&logoColor=white)
+
+**Robotics / ML** *(secondary)*
+
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=PyTorch&logoColor=white)
+![ROS](https://img.shields.io/badge/ROS%2FROS2-22314E?style=flat&logo=ros&logoColor=white)
+![Isaac Sim](https://img.shields.io/badge/Isaac%20Sim%2FLab-76B900?style=flat&logo=nvidia&logoColor=white)
+![CUDA](https://img.shields.io/badge/CUDA-76B900?style=flat&logo=nvidia&logoColor=white)
 
 </div>
 
 ---
 
-### Industry Experience
+### Open-Source & From-Scratch
 
-```
-Jan 2022 – Dec 2023   Robot Control Dev & Web Lead   Dogugonggan
-                      Real-time monitoring & control for 30+ autonomous robots across
-                      hospital, factory, and outdoor sites — WebRTC telemetry, MQTT
-                      commands, voice (TTS/STT) interface.
+Secondary to the production work above: reproducible repositories where I re-derive core algorithms
+from the papers and measure them, rather than wrap a library. Every number below is quoted directly
+from that repo's own README.
 
-Jan 2024 – Present    Full-Stack Developer            Niflers (Fintech)
-                      Climate-risk reporting platform generating 200K+ corporate reports;
-                      AWS data pipelines (ECS, Step Functions, Lambda) with FastAPI backends.
+| Repository | What it is | Headline result |
+|---|---|---|
+| [**mapf-fleet**](https://github.com/hurjun/mapf-fleet) | From-scratch **TypeScript MAPF** engine (windowed cooperative A\* / WHCA\*, Conflict-Based Search), 3D fleet sim, capacity-limited elevators, fleet-size optimizer. | **0 collisions** across **66** seed-swept runs / **21,000+** ticks; **~9.3 deliveries/min** at 16 agents. |
+| [**mlops** · PPE Watchman](https://github.com/hurjun/mlops) | YOLOv8 edge detector → FastAPI hub → WebSocket Next.js live dashboard; offline-first edge-to-cloud event pipeline. | **33 passing tests** over a distributed event pipeline (edge inference → aggregation → live browser). |
+| [**attention_is_all_you_need**](https://github.com/hurjun/attention_is_all_you_need) | From-scratch PyTorch **Transformer** (multi-head attention, sinusoidal encodings, Noam warmup, label smoothing). | **98.2%** greedy exact-match on a synthetic reverse task, reproducible in **~90 s on CPU**. |
+| [**xLSTM**](https://github.com/hurjun/xLSTM) | From-scratch **sLSTM / mLSTM** cells (exponential gating, matrix memory) — NeurIPS 2024. | **100%** on 64-step recall, where a vanilla LSTM stays at chance. |
+| [**speculative-decoding-lab**](https://github.com/hurjun/speculative-decoding-lab) | Distribution-preserving **speculative decoding** with acceptance sampling. | **Up to 1.80×** lossless speedup (MPS), output token-for-token identical to autoregressive decoding. |
+| [**stock-forecast-benchmark**](https://github.com/hurjun/stock-forecast-benchmark) | **Leakage-aware** benchmark of 9 forecasters behind one interface, with an auto-generated leaderboard. | Apples-to-apples on held-out data — **Prophet leads** over LSTM, GRU, XGBoost, and a Transformer. |
+| [**stt-nursing-system** · MediVoice](https://github.com/hurjun/stt-nursing-system) | Voice-first nursing-documentation app (React / TypeScript) turning bedside rounds into structured records. | Study showed **up to 96%** documentation-time reduction. |
 
-2021                  Full-Stack / Freelance          Mobile Entropy · NSG
-```
+**More:** [**open3d**](https://github.com/hurjun/open3d) — 7-stage point-cloud / LiDAR pipeline ·
+[**opencv**](https://github.com/hurjun/opencv) — Faster R-CNN person detector + ROI rule engine ·
+[**setpoint**](https://github.com/hurjun/setpoint) — RL-from-scratch HVAC control ·
+[**gre**](https://github.com/hurjun/gre) — adaptive GRE practice (FastAPI + React + MySQL) ·
+[**futurescole**](https://github.com/hurjun/futurescole) — containerized telemetry pipeline (Python + PostgreSQL + Docker).
+
+---
+
+### Education
+
+**B.S. Computer Science**, Chungnam National University · *2016.03 – 2025.02*
 
 ---
 
